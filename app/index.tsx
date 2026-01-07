@@ -1,22 +1,21 @@
 import '../app/globals.css'
-import {FlatList, Pressable, Text, View} from "react-native";
+import {FlatList, Pressable, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {images, offers} from "@/constants";
 import {Fragment} from "react";
 import {Image} from "expo-image";
 import cn from 'clsx'
+import CartButton from "@/components/CartButton";
+
 
 export default function Index() {
     return (
         <SafeAreaView className="flex-1 bg-white">
+
             <FlatList
                 data={offers}
-
                 renderItem={({item, index}) => {
-
                     const isEven:boolean = index % 2 === 0;
-
-
 
                     return (
                         <View style={{marginBottom: 16}}>
@@ -52,7 +51,26 @@ export default function Index() {
                     )
                 }}
            contentContainerClassName={"pb-28 px-5"}
+                ListHeaderComponent={()=>(
+                    <View className="flex-row justify-between items-center w-full my-5 ">
+                        <View className="flex-start">
+                            <Text className="small-bold text-primary " >DELIVER TO</Text>
+                            <TouchableOpacity  className="flex-center flex-row gap-x-1 mt-0.5">
+                                <Text className="small-bold text-dark-100  " >Croatia</Text>
+                                <Image
+                                    source={images.arrowDown}
+                                    style={{width:10 , height:10}}
+                                    contentFit="contain"
+                                />
+                            </TouchableOpacity>
+
+                        </View>
+
+                        <CartButton/>
+                    </View>
+                )}
             />
+
         </SafeAreaView>
     );
 }
