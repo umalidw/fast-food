@@ -1,6 +1,6 @@
 
 import {Account, Avatars, Client, Databases, ID, Query} from "react-native-appwrite"
-import {CreateUserParams, SignInParams} from "@/type";
+import {CreateUserParams, SignInParams, User} from "@/type";
 
 
 
@@ -58,7 +58,7 @@ export  const getCurrentUser = async () => {
     try {
     const currentAccount  = await  account.get();
     if (!currentAccount) throw Error;
-    const currentUser =  await databases.listDocuments(appwriteConfig.databaseId,appwriteConfig.userCollectionId,[Query.equal('accountId',currentAccount.$id)]);
+    const currentUser =  await databases.listDocuments<User>(appwriteConfig.databaseId,appwriteConfig.userCollectionId,[Query.equal('accountId',currentAccount.$id)]);
     if (!currentUser) throw Error;
     return currentUser.documents[0];
 
