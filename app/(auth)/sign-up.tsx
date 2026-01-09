@@ -3,13 +3,16 @@ import {Link, router} from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import {useState} from "react";
+import {createUser} from "@/lib/appwrite";
 
 function SignUp() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [form,setForm] = useState({name:'',email:'',password:''});
 
     const submit = async () => {
-        if (!form.name || !form.email || !form.password) {
+        const {name,email,password}=form;
+
+        if (!name || !email || !password) {
             Alert.alert('Error', 'Please fill all fields');
             return;
         }
@@ -18,6 +21,7 @@ function SignUp() {
 
         try {
             // call Appwrite sign up here
+              await createUser({name, email, password});
 
             Alert.alert(
                 'Success',
@@ -65,7 +69,7 @@ function SignUp() {
                 label='Password'
                 secureTextEntry={true}
             />
-            <CustomButton title="Sign In" isLoading={isSubmitting} onPress={submit}/>
+            <CustomButton title="Sign Up" isLoading={isSubmitting} onPress={submit}/>
             <View className='flex justify-center  flex-row gap-2 items-center'>
                 <Text className='base-regular text-gray-100'>
                     Don't have an account?
